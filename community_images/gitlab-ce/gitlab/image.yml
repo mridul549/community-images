@@ -1,0 +1,55 @@
+name: gitlab-ce
+official_name: Gitlab
+official_website: https://gitlab.com
+source_image_provider: Gitlab
+source_image_repo: https://docker.io/gitlab/gitlab-ce
+source_image_repo_link: https://hub.docker.com/r/gitlab/gitlab-ce
+rf_docker_link: rapidfort/gitlab-ce
+image_workflow_name: gitlabce_gitlab
+github_location: gitlab-ce/gitlab
+report_url: https://frontrow.rapidfort.com/app/community/imageinfo/docker.io%2Fgitlab%2Fgitlab-ce
+usage_instructions: |
+  $ helm repo add gitlab https://charts.gitlab.io/
+
+  $ helm repo update
+
+  # install gitlab, just replace repository with RapidFort registry
+  $ helm upgrade --install gitlab gitlab/gitlab \
+  --timeout 600s \
+  --set global.hosts.domain=example.com \
+  --set global.hosts.externalIP=10.10.10.10 \
+  --set certmanager-issuer.email=me@example.com \
+  --set postgresql.image.tag=13.6.0
+what_is_text: |
+  GitLab helps you automate the builds, integration, and verification of your code. With SAST, DAST, code quality analysis, plus pipelines that enable concurrent testing and parallel execution, your teams get quick insights about every commit so they can deliver higher quality code faster.
+disclaimer: |
+  Trademarks: This software listing is packaged by RapidFort. The respective trademarks mentioned in the offering are owned by the respective companies, and use of them does not imply any affiliation or endorsement.
+docker_links:
+  - "[`15.3`, `latest` (docker/Dockerfile)](https://gitlab.com/gitlab-org/omnibus-gitlab/-/blob/master/docker/Dockerfile)"
+input_registry:
+  registry: docker.io
+  account: gitlab
+output_registry:
+  registry: docker.io
+  account: rapidfort
+repo_sets: 
+  - gitlab-ce:
+      input_base_tag: "15.3"
+runtimes:
+  - type: k8s
+    script: k8s_coverage.sh
+    helm_repo: gitlab/gitlab-ce
+    image_keys:
+      gitlab-ce:
+        repository: "image.repository"
+        tag: "image.tag"
+    override_file: "overrides.yml"
+  - type: docker_compose
+    script: dc_coverage.sh
+    compose_file: docker-compose.yml
+    image_keys:
+      gitlab-ce:
+        repository: "GITLABCE_IMAGE_REPOSITORY"
+        tag: "GITLABCE_IMAGE_TAG"
+  - type: docker
+    script: docker_coverage.sh
