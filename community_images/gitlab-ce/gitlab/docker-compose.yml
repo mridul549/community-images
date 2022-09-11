@@ -1,11 +1,20 @@
-version: '2'
-
+version: '3.6'
 services:
-  nats1:
-    image: ${NATS_IMAGE_REPOSITORY}:${NATS_IMAGE_TAG}
-    cap_add:
-      - SYS_PTRACE
+  web:
+    image: ${GITLABCE_IMAGE_REPOSITORY}:${GITLABCE_IMAGE_TAG}
+    restart: always
+    hostname: 'gitlab.example.com'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://gitlab.example.com'
+        # Add any other gitlab.rb configuration here, each on its own line
+        gitlab_rails['initial_root_password'] = 'adminadmin'
     ports:
-      - '4222:4222'
-      - '6222:6222'
-      - '8222:8222'
+      - '4480:80'
+      - '4443:443'
+      - '4422:22'
+    volumes:
+      - '$GITLAB_HOME/config:/etc/gitlab'
+      - '$GITLAB_HOME/logs:/var/log/gitlab'
+      - '$GITLAB_HOME/data:/var/opt/gitlab'
+    shm_size: '256m'

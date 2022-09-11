@@ -36,14 +36,14 @@ repo_sets:
   - gitlab-ce:
       input_base_tag: "15.3"
 runtimes:
-  - type: k8s
-    script: k8s_coverage.sh
-    helm_repo: gitlab/gitlab-ce
-    image_keys:
-      gitlab-ce:
-        repository: "image.repository"
-        tag: "image.tag"
-    override_file: "overrides.yml"
+  # - type: k8s
+  #   script: k8s_coverage.sh
+  #   helm_repo: gitlab/gitlab-ce
+  #   image_keys:
+  #     gitlab-ce:
+  #       repository: "image.repository"
+  #       tag: "image.tag"
+  #   override_file: "overrides.yml"
   - type: docker_compose
     script: dc_coverage.sh
     compose_file: docker-compose.yml
@@ -51,5 +51,5 @@ runtimes:
       gitlab-ce:
         repository: "GITLABCE_IMAGE_REPOSITORY"
         tag: "GITLABCE_IMAGE_TAG"
-  - type: docker
-    script: docker_coverage.sh
+  # - type: docker
+  #   script: docker_coverage.sh
