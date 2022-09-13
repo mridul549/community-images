@@ -34,7 +34,7 @@ output_registry:
   account: rapidfort
 repo_sets: 
   - gitlab-ce:
-      input_base_tag: "15.3"
+      input_base_tag: "14.1"
 runtimes:
   # - type: k8s
   #   script: k8s_coverage.sh
