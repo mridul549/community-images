@@ -12,7 +12,7 @@ from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 import json
 
-endpoint = "https://localhost"
+endpoint = "https://localhost:6643"
 root_route = urljoin(endpoint, "/")
 sign_in_route = urljoin(endpoint, "/users/sign_in")
 pat_route = urljoin(endpoint, "/-/profile/personal_access_tokens")

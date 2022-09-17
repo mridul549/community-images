@@ -11,7 +11,7 @@ function test_gitlab() {
    while ! docker-compose -p "$NAMESPACE" ps | grep -q -i -w "healthy"
       do
          sleep 3
-         echo "waiting..."
+         echo "waiting for gitlab container to be healthy..."
       done
 
    # get the personal access token for gitlab access
@@ -25,7 +25,7 @@ function test_gitlab() {
      --url 'https://localhost:6643/api/v4/projects/'
 
    # clone the new project and make a test commit
-   git -c http.sslVerify=false clone https://root:adminadmin@localhost:4443/root/new_project.git
+   git -c http.sslVerify=false clone https://root:adminadmin@localhost:6643/root/new_project.git
 
    cd new_project
    echo "test commit" > test_file.txt
@@ -36,13 +36,13 @@ function test_gitlab() {
    # delete and reclone the project
    cd ..
    rm -rf new_project
-   git -c http.sslVerify=false clone https://root:adminadmin@localhost:4443/root/new_project.git
+   git -c http.sslVerify=false clone https://root:adminadmin@localhost:6643/root/new_project.git
    cd new_project
    if [ ! -f test_file.txt ]; then
       exit 1
    fi
 
-   GITLAB_PORT=6643
    # run selenium tests
+   GITLAB_PORT=6643
    "${SCRIPTPATH}"/../../common/selenium_tests/runner.sh localhost "${GITLAB_PORT}" "${SCRIPTPATH}"/selenium_tests "${NAMESPACE}" 2>&1
 }

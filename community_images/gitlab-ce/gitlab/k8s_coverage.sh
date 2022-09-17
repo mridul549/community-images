@@ -10,8 +10,6 @@ SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 . "${SCRIPTPATH}"/coverage.sh
 
 JSON_PARAMS="$1"
+JSON=$(cat "$JSON_PARAMS")
 
-NAMESPACE=$(jq -r '.namespace_name' < "$JSON_PARAMS")
-RELEASE_NAME=$(jq -r '.release_name' < "$JSON_PARAMS")
-
-test_nats "${NAMESPACE}" "${RELEASE_NAME}"
+echo "Json params for k8s coverage = $JSON"
