@@ -2,6 +2,9 @@ version: '3.6'
 services:
   web:
     image: ${GITLABCE_IMAGE_REPOSITORY}:${GITLABCE_IMAGE_TAG}
+    privileged: true
+    cap_add:
+      - SYS_PTRACE
     restart: always
     hostname: 'gitlab.example.com'
     environment:
@@ -10,9 +13,9 @@ services:
         # Add any other gitlab.rb configuration here, each on its own line
         gitlab_rails['initial_root_password'] = 'adminadmin'
     ports:
-      - '4480:80'
-      - '4443:443'
-      - '4422:22'
+      - '6680:80'
+      - '6643:443'
+      - '6622:22'
     volumes:
       - '$GITLAB_HOME/config:/etc/gitlab'
       - '$GITLAB_HOME/logs:/var/log/gitlab'

@@ -13,6 +13,8 @@ JSON_PARAMS="$1"
 
 JSON=$(cat "$JSON_PARAMS")
 
+NAMESPACE=$(jq -r '.namespace_name' < "$JSON_PARAMS")
+
 echo "Json params for docker compose coverage = $JSON"
 
-test_gitlab
+test_gitlab "$NAMESPACE"
